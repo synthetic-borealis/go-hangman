@@ -79,8 +79,8 @@ var wordArray = [7]string{
 
 var randomWord string
 var guessedLetters string
-var correctLetters = []string{}
-var wrongGuesses = []string{}
+var correctLetters []string
+var wrongGuesses []string
 
 const letterPool string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -145,7 +145,7 @@ func main() {
 		var letter = strings.ToUpper(readLetter(reader))
 		if strings.Contains(randomWord, letter) {
 			correctLetters = append(correctLetters, letter)
-			if len(correctLetters) == len(randomWord) {
+			if randomWord == getCoveredWord() {
 				break
 			}
 		} else {
