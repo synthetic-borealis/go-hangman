@@ -10,24 +10,6 @@ import (
 	"time"
 )
 
-/*
- +---+
- 0   |
-/|\  |
-/ \  |
-    ===
-
-Secret Word: M_N___
-Incorrect Guesses: N
-
-Sorry, you're dead. The word is MONKEY.
-Correct, the secret word is MONKEY.
-
-Please enter only one letter.
-Please enter a letter.
-You have already guessed that letter.
-*/
-
 var hangmanArray = [7]string{
 	// 0
 	" +---+\n" +
@@ -124,24 +106,20 @@ func getCoveredWord() string {
 	return hiddenWord
 }
 
+func getRandomWord() string {
+	rand.Seed(time.Now().Unix())
+	return wordArray[rand.Intn(len(wordArray))]
+}
+
 func main() {
 	reader := bufio.NewReader(os.Stdin)
-	rand.Seed(time.Now().Unix())
-	randomWord = wordArray[rand.Intn(len(wordArray))]
-	// Show game board
-	// Get a letter from the user
-	//
-	// A. If the guess is correct
-	//   1. Are there more letters to guess?
-	//   2. If not, player wins
-	//   3. Otherwise, add letter to guessedLetters and correctLetters
-	// B. If the guess is incorrect
-	// 1. Add new letter to guessedLetters and wrongGuesses
-	// 2. Check if player died
+	randomWord = getRandomWord()
+
 	for {
 		fmt.Println(hangmanArray[len(wrongGuesses)])
 		fmt.Println("Secret Word:", getCoveredWord())
 		fmt.Println("Incorrect Guesses:", strings.Join(wrongGuesses, ", "))
+
 		var letter = strings.ToUpper(readLetter(reader))
 		if strings.Contains(randomWord, letter) {
 			correctLetters = append(correctLetters, letter)
@@ -156,6 +134,7 @@ func main() {
 		}
 		guessedLetters += letter
 	}
+
 	if getCoveredWord() == randomWord {
 		fmt.Println("A winrar is you! The word is indeed " + randomWord)
 	} else {
