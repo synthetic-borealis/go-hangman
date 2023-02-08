@@ -116,9 +116,7 @@ func main() {
 	randomWord = getRandomWord()
 
 	for {
-		fmt.Println(hangmanArray[len(wrongGuesses)])
-		fmt.Println("Secret Word:", getCoveredWord())
-		fmt.Println("Incorrect Guesses:", strings.Join(wrongGuesses, ", "))
+		showDisplay()
 
 		var letter = strings.ToUpper(readLetter(reader))
 		if strings.Contains(randomWord, letter) {
@@ -141,4 +139,10 @@ func main() {
 		fmt.Println(hangmanArray[6])
 		fmt.Println("You lost, better luck next time! The word was " + randomWord)
 	}
+}
+
+func showDisplay() {
+	fmt.Println(hangmanArray[len(wrongGuesses)])
+	fmt.Println("Secret Word:", getCoveredWord())
+	fmt.Println("Incorrect Guesses:", strings.Join(wrongGuesses, ", "))
 }
